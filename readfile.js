@@ -5,7 +5,6 @@ const parseQuestionFile = async (filePath) => {
     if (!filePath.endsWith('.txt')) {
       return 'File Type Error';
     }
-
     const data = await fs.readFile(filePath, 'utf8');
     const lines = data.split('\n').filter(line => line.trim() !== '');
 
@@ -28,7 +27,7 @@ const parseQuestionFile = async (filePath) => {
         currentQuestion.question = line.substring(3, line.length - 2).trim();
       } else if (line.startsWith('$A:')) {
         const parts = line.substring(3, line.length - 1).split('|');
-        if (parts.length < 2) {
+        if (parts.length < 5) {
           return "File integrity error";
         }
         currentQuestion.choices = parts.slice(0, -1);
@@ -51,24 +50,5 @@ const parseQuestionFile = async (filePath) => {
   }
 };
 
-//const allPath = [
-//  "./testfile/question empty.txt",
-//  "./testfile/question lack header.txt",
-//  "./testfile/question no answer.txt",
-//  "./testfile/question no choice.txt",
-//  "./testfile/question without back $.txt",
-//  "./testfile/question without front $.txt",
-//  "./testfile/question.gif",
-//  "./testfile/question.mp4",
-//  "./testfile/question.txt"
-//];
-//const runTests = async () => {
-//  for (const path of allPath) {
-//    const result = await parseQuestionFile(path);
-//    console.log(result);
-//  }
-//};
-//
-//runTests();
-
 module.exports = parseQuestionFile;
+
